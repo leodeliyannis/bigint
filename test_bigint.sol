@@ -12,3 +12,4 @@ I2 < I1: true
 I2 == I1: false
 I2 > I1: false
 
+Copying bigint I1 to I3...

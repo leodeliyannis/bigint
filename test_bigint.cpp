@@ -38,6 +38,10 @@ int main(){
 	printf("I2 < I1: %s\n",  I2  < I1 ? "true" : "false");
 	printf("I2 == I1: %s\n", I2 == I1 ? "true" : "false");
 	printf("I2 > I1: %s\n\n",  I2  > I1 ? "true" : "false");
+	
+	printf("Copying bigint I1 to I3...\n");
+	bigint I3 = I1;
+	assert(I3 == I1);
 	/*
 	bigint quoc, mod;
 	quoc = I1 / I2;

@@ -55,6 +55,6 @@ public:
 	bool operator  <(const bigint &other) const{ return cmp(other) < 0; }
 	bool operator ==(const bigint &other) const{ return cmp(other) == 0; }
 	bool operator  >(const bigint &other) const{ return cmp(other) > 0; }
-	bigint(){}
+	void operator  =(const bigint &other){ V = other.V; }
 	bigint(const string &S){ fromString(S); }
 };
