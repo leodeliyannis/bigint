@@ -28,6 +28,16 @@ int main(){
 	printf("%s\n\n", I1.toString().c_str());
 	printf("Printing bigint I2:\n");
 	printf("%s\n\n", I2.toString().c_str());
+	printf("I1 < I2: %s\n",  I1  < I2 ? "true" : "false");
+	printf("I1 == I2: %s\n", I1 == I2 ? "true" : "false");
+	printf("I1 > I2: %s\n\n",  I1  > I2 ? "true" : "false");
+	
+	assert(I1 == I1);
+	assert(I2 == I2);
+	
+	printf("I2 < I1: %s\n",  I2  < I1 ? "true" : "false");
+	printf("I2 == I1: %s\n", I2 == I1 ? "true" : "false");
+	printf("I2 > I1: %s\n\n",  I2  > I1 ? "true" : "false");
 	/*
 	bigint quoc, mod;
 	quoc = I1 / I2;

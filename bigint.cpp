@@ -11,9 +11,17 @@ using namespace std;
 typedef unsigned long long ull;
 
 struct bigint{
-private:
 	vector<ull> V;
 	const int BASE = ((int)1e8);
+private:
+	int cmp(const bigint &other) const{
+		int i;
+		if(V.size() < other.V.size()) return -1;
+		if(V.size() > other.V.size()) return  1;
+		for(i = (int)V.size()-1; i >= 0 && V[i] == other.V[i]; i--);
+		if(i == -1) return 0;
+		return (V[i] < other.V[i]) ? -1 : 1;
+	}
 public:
 	bool fromString(const string &S){
 		int i, j, pot;
@@ -44,6 +52,9 @@ public:
 		}
 		return ret;
 	}
+	bool operator  <(const bigint &other) const{ return cmp(other) < 0; }
+	bool operator ==(const bigint &other) const{ return cmp(other) == 0; }
+	bool operator  >(const bigint &other) const{ return cmp(other) > 0; }
 	bigint(){}
 	bigint(const string &S){ fromString(S); }
 };
