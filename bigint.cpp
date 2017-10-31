@@ -6,14 +6,15 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 typedef unsigned long long ull;
 
 struct bigint{
 	vector<ull> V;
-	const int BASE = ((int)1e8);
 private:
+	const int BASE = ((int)1e8);
 	int cmp(const bigint &other) const{
 		int i;
 		if(V.size() < other.V.size()) return -1;
@@ -23,6 +24,11 @@ private:
 		return (V[i] < other.V[i]) ? -1 : 1;
 	}
 public:
+	void trimZeroes(){
+		int i;
+		for(i = (int)V.size()-1; i >= 0 && V[i] == 0; i--);
+		V.resize((i == -1) ? 1 : (i + 1));
+	}
 	bool fromString(const string &S){
 		int i, j, pot;
 		i = (int)S.size() - 1;
@@ -38,9 +44,12 @@ public:
 				pot *= 10;
 			}
 		}
+		trimZeroes();
 		return true;
 	}
-	string toString(){
+	bigint(){ fromString("0"); }
+	bigint(const string &S){ fromString(S); }
+	string toString() const{
 		int i;
 		char buf[11];
 		string ret;
@@ -56,5 +65,20 @@ public:
 	bool operator ==(const bigint &other) const{ return cmp(other) == 0; }
 	bool operator  >(const bigint &other) const{ return cmp(other) > 0; }
 	void operator  =(const bigint &other){ V = other.V; }
-	bigint(const string &S){ fromString(S); }
+	bigint operator +(const bigint &other) const{
+		int i, t1 = (int)V.size(), t2 = (int)other.V.size();
+		ull carry = 0, val1, val2;
+		bigint ret;
+		ret.V.assign(max(t1, t2), 0);
+		for(i = 0; i < t1 || i < t2; i++){
+			val1 = i < t1 ? V[i] : 0;
+			val2 = i < t2 ? other.V[i] : 0;
+			ret.V[i] = val1 + val2 + carry;
+			carry = ret.V[i] / BASE;
+			ret.V[i] %= BASE;
+		}
+		ret.V[i] = carry;
+		ret.trimZeroes();
+		return ret;
+	}
 };
